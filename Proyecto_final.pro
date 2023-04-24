@@ -9,17 +9,21 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    ../Plots/qcustomplot/qcustomplot.cpp \
     bbdd.cpp \
     character.cpp \
     insertcharacter.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    qcustomplot.cpp
 
 HEADERS += \
+    ../Plots/qcustomplot/qcustomplot.h \
     bbdd.h \
     character.h \
     insertcharacter.h \
-    mainwindow.h
+    mainwindow.h \
+    qcustomplot.h
 
 FORMS += \
     character.ui \
