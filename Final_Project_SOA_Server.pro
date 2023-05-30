@@ -10,19 +10,14 @@ CONFIG += c++17
 
 SOURCES += \
     bbdd.cpp \
-    character.cpp \
-    insertcharacter.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
     bbdd.h \
-    character.h \
-    insertcharacter.h \
     mainwindow.h
 
 FORMS += \
-    character.ui \
     mainwindow.ui
 
 # Default rules for deployment.
