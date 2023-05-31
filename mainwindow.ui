@@ -481,6 +481,19 @@
      <set>Qt::AlignBottom|Qt::AlignJustify</set>
     </property>
    </widget>
+   <widget class="QTextEdit" name="clients_msgsEdit">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>1101</width>
+      <height>531</height>
+     </rect>
+    </property>
+    <property name="placeholderText">
+     <string>Messages of clients</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -488,7 +501,7 @@
      <x>0</x>
      <y>0</y>
      <width>1167</width>
-     <height>22</height>
+     <height>23</height>
     </rect>
    </property>
    <property name="palette">
@@ -509,15 +522,6 @@
          <red>192</red>
          <green>191</green>
          <blue>188</blue>
-        </color>
-       </brush>
-      </colorrole>
-      <colorrole role="Light">
-       <brush brushstyle="SolidPattern">
-        <color alpha="255">
-         <red>255</red>
-         <green>255</green>
-         <blue>255</blue>
         </color>
        </brush>
       </colorrole>
@@ -658,15 +662,6 @@
         </color>
        </brush>
       </colorrole>
-      <colorrole role="Light">
-       <brush brushstyle="SolidPattern">
-        <color alpha="255">
-         <red>255</red>
-         <green>255</green>
-         <blue>255</blue>
-        </color>
-       </brush>
-      </colorrole>
       <colorrole role="Midlight">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
@@ -801,15 +796,6 @@
          <red>192</red>
          <green>191</green>
          <blue>188</blue>
-        </color>
-       </brush>
-      </colorrole>
-      <colorrole role="Light">
-       <brush brushstyle="SolidPattern">
-        <color alpha="255">
-         <red>255</red>
-         <green>255</green>
-         <blue>255</blue>
         </color>
        </brush>
       </colorrole>
@@ -984,15 +970,6 @@
         </color>
        </brush>
       </colorrole>
-      <colorrole role="Light">
-       <brush brushstyle="SolidPattern">
-        <color alpha="255">
-         <red>255</red>
-         <green>255</green>
-         <blue>255</blue>
-        </color>
-       </brush>
-      </colorrole>
       <colorrole role="Midlight">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
@@ -1130,15 +1107,6 @@
         </color>
        </brush>
       </colorrole>
-      <colorrole role="Light">
-       <brush brushstyle="SolidPattern">
-        <color alpha="255">
-         <red>255</red>
-         <green>255</green>
-         <blue>255</blue>
-        </color>
-       </brush>
-      </colorrole>
       <colorrole role="Midlight">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
@@ -1273,15 +1241,6 @@
          <red>192</red>
          <green>191</green>
          <blue>188</blue>
-        </color>
-       </brush>
-      </colorrole>
-      <colorrole role="Light">
-       <brush brushstyle="SolidPattern">
-        <color alpha="255">
-         <red>255</red>
-         <green>255</green>
-         <blue>255</blue>
         </color>
        </brush>
       </colorrole>
@@ -1456,7 +1415,8 @@
   </action>
   <action name="actionExit_Server">
    <property name="icon">
-    <iconset theme="application-exit"/>
+    <iconset theme="application-exit">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Exit Server</string>
@@ -1467,7 +1427,8 @@
   </action>
   <action name="actionAbout_Cheddar_Server">
    <property name="icon">
-    <iconset theme="help-about"/>
+    <iconset theme="help-about">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>About Cheddar++ Server</string>
@@ -1475,7 +1436,8 @@
   </action>
   <action name="actionManual">
    <property name="icon">
-    <iconset theme="accessories-dictionary"/>
+    <iconset theme="accessories-dictionary">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Manual</string>
