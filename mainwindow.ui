@@ -935,24 +935,27 @@
    </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
-     <string>File</string>
+     <string>Server options</string>
     </property>
-    <addaction name="actionExit"/>
+    <addaction name="actionExit_Server"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
      <string>Help</string>
     </property>
-    <addaction name="actionAbout_Cheddar"/>
+    <addaction name="actionAbout_Cheddar_Server"/>
+    <addaction name="separator"/>
     <addaction name="actionManual"/>
    </widget>
    <widget class="QMenu" name="menuSimulation">
     <property name="title">
-     <string>Data Base</string>
+     <string>Data base</string>
     </property>
-    <addaction name="actionNew_data_base"/>
-    <addaction name="actionLoad_data_base"/>
-    <addaction name="actionClose_data_base"/>
+    <addaction name="actionNew_Data_Base"/>
+    <addaction name="separator"/>
+    <addaction name="actionLoad_Data_Base"/>
+    <addaction name="separator"/>
+    <addaction name="actionClose_Data_Base"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuSimulation"/>
@@ -1423,11 +1426,10 @@
    <addaction name="actionLoad_Data_Base"/>
    <addaction name="separator"/>
    <addaction name="actionClose_Data_Base"/>
-   <addaction name="separator"/>
   </widget>
   <action name="actionLoad_Data_Base">
    <property name="icon">
-    <iconset theme="list-add">
+    <iconset theme="system-search">
      <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
@@ -1442,7 +1444,7 @@
   </action>
   <action name="actionNew_Data_Base">
    <property name="icon">
-    <iconset theme="network-server">
+    <iconset theme="list-add">
      <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
@@ -1452,34 +1454,36 @@
     <string>New Data Base</string>
    </property>
   </action>
-  <action name="actionExit">
+  <action name="actionExit_Server">
+   <property name="icon">
+    <iconset theme="application-exit"/>
+   </property>
    <property name="text">
-    <string>Exit</string>
+    <string>Exit Server</string>
+   </property>
+   <property name="toolTip">
+    <string>Exit Server</string>
    </property>
   </action>
-  <action name="actionAbout_Cheddar">
+  <action name="actionAbout_Cheddar_Server">
+   <property name="icon">
+    <iconset theme="help-about"/>
+   </property>
    <property name="text">
-    <string>About </string>
+    <string>About Cheddar++ Server</string>
    </property>
   </action>
   <action name="actionManual">
+   <property name="icon">
+    <iconset theme="accessories-dictionary"/>
+   </property>
    <property name="text">
     <string>Manual</string>
    </property>
   </action>
-  <action name="actionNew_data_base">
-   <property name="text">
-    <string>New data base</string>
-   </property>
-  </action>
-  <action name="actionLoad_data_base">
-   <property name="text">
-    <string>Load data base</string>
-   </property>
-  </action>
   <action name="actionClose_Data_Base">
    <property name="icon">
-    <iconset theme="list-remove">
+    <iconset theme="application-exit">
      <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
@@ -1500,7 +1504,7 @@
   </action>
   <action name="actionOff_Server">
    <property name="icon">
-    <iconset theme="emblem-unreadable">
+    <iconset theme="system-shutdown">
      <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
@@ -1508,11 +1512,6 @@
    </property>
    <property name="toolTip">
     <string>Off Server</string>
-   </property>
-  </action>
-  <action name="actionClose_data_base">
-   <property name="text">
-    <string>Close data base</string>
    </property>
   </action>
  </widget>
