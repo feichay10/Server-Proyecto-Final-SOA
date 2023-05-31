@@ -25,6 +25,7 @@ class MainWindow : public QMainWindow {
  private slots:
   void on_actionServer_On_triggered();
   void manConn();
+  void clientInteraction();
 
  private:
   Ui::MainWindow* ui;

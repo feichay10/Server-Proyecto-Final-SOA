@@ -27,8 +27,17 @@ void MainWindow::manConn() {
   while (server->hasPendingConnections()) {
     QTcpSocket* new_socket = server->nextPendingConnection();
     connection_list.push_front(new_socket);
+    connect(new_socket, SIGNAL(readyRead()), this, SLOT(clientInteraction()));
     findChild<QTextEdit*>("clients_msgsEdit")->insertPlainText("\nClient " + QString::number(new_socket->socketDescriptor()) + " connected...");
     QMessageBox::information(this, "New client", ("\nClient " + QString::number(new_socket->socketDescriptor()) + " connected..."));
+    connection_list.front()->write("Hola cliente"); //temporarily
     //connect(new_socket, SIGNAL(readyRead()), this, SLOT());
   }
+}
+
+void MainWindow::clientInteraction() {
+  QTcpSocket* client_conn = reinterpret_cast<QTcpSocket*>(sender());
+  QByteArray message_from_client = client_conn->readAll();
+  findChild<QTextEdit*>("clients_msgsEdit")->insertPlainText("\nClient " + QString::number(client_conn->socketDescriptor()) + " sent this: " + message_from_client.toStdString().c_str());
+  client_conn->write("¿Pasó usted por casa?"); //temporarily
 }
