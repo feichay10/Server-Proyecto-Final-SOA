@@ -459,39 +459,40 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>1030</x>
-      <y>510</y>
-      <width>41</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="pixmap">
-     <pixmap>../../../../Descargas/logo-ull-1723770217.jpeg</pixmap>
-    </property>
-    <property name="scaledContents">
-     <bool>true</bool>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignBottom|Qt::AlignJustify</set>
-    </property>
-   </widget>
    <widget class="QTextEdit" name="clients_msgsEdit">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>10</y>
-      <width>1101</width>
-      <height>531</height>
+      <y>330</y>
+      <width>351</width>
+      <height>111</height>
      </rect>
     </property>
     <property name="placeholderText">
      <string>Messages of clients</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_to_show_image">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>90</y>
+      <width>101</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>IMAGE CLIENT</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit_client_number">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>50</y>
+      <width>381</width>
+      <height>25</height>
+     </rect>
     </property>
    </widget>
   </widget>
@@ -501,7 +502,7 @@
      <x>0</x>
      <y>0</y>
      <width>1167</width>
-     <height>23</height>
+     <height>22</height>
     </rect>
    </property>
    <property name="palette">
@@ -1444,6 +1445,9 @@
    </property>
   </action>
   <action name="actionClose_Data_Base">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="icon">
     <iconset theme="application-exit">
      <normaloff>.</normaloff>.</iconset>
@@ -1465,6 +1469,9 @@
    </property>
   </action>
   <action name="actionOff_Server">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="icon">
     <iconset theme="system-shutdown">
      <normaloff>.</normaloff>.</iconset>

@@ -7,6 +7,7 @@
 #include <QByteArray>
 #include <QString>
 #include <QMessageBox>
+#include <QImage>
 #include <forward_list>
 
 QT_BEGIN_NAMESPACE
@@ -27,7 +28,11 @@ class MainWindow : public QMainWindow {
   void manConn();
   void clientInteraction();
 
- private:
+  void on_actionOff_Server_triggered();
+
+  void on_actionClose_Data_Base_triggered();
+
+  private:
   Ui::MainWindow* ui;
   QTcpServer* server;
   std::forward_list<QTcpSocket*> connection_list;
