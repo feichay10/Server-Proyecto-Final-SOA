@@ -8,6 +8,7 @@
 #include <QString>
 #include <QMessageBox>
 #include <QImage>
+#include <QTextStream>
 #include <forward_list>
 
 QT_BEGIN_NAMESPACE
@@ -25,7 +26,7 @@ class MainWindow : public QMainWindow {
 
  private slots:
   void on_actionServer_On_triggered();
-  void manConn();
+  void manageConnect();
   void clientInteraction();
 
   void on_actionOff_Server_triggered();
