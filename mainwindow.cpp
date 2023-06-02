@@ -64,7 +64,6 @@ void MainWindow::clientInteraction() {
     while (client_conn->bytesAvailable() > 0)
       message_from_client = client_conn->readAll();
 
-    QMessageBox::information(this, windowTitle(), "The client sent this: ");
     QImage image_from_client;
     bool delivery_success = image_from_client.loadFromData(message_from_client);
 
@@ -78,6 +77,17 @@ void MainWindow::clientInteraction() {
       QMessageBox::critical(this, "Error: Cannot be able to get the image", "The image from client " + QString::number(server->nextPendingConnection()->socketDescriptor()) + " has some problems to be read");
 
   } else if (message_from_client.toStdString() == "RECEIVE_IMG") {
+    QString imagePath = QFileDialog::getOpenFileName(this, "Select image to send to client", QDir::homePath(), "Images (*.png *.jpg *.jpeg);;Any file(*.*)");
+
+    if (!imagePath.isEmpty()) {
+      QImage image_to_client(imagePath); ///< We store the image correctly from the file system
+      QByteArray byteArrayImage;
+      QBuffer bufferImage(&byteArrayImage);
+      bufferImage.open(QIODevice::WriteOnly);
+      image_to_client.save(&bufferImage, "JPEG"); ///< We store the image in the "bufferImage" as a "JPEG" to be sent to client
+      client_conn->write(byteArrayImage);
+      client_conn->waitForBytesWritten();
+    }
   } else {
     QMessageBox::critical(this, "ERROR: Command to server is not recognized", "The client " + QString::number(client_conn->socketDescriptor()) + " wants to do an unknown action");
     client_conn->write("ERROR1");

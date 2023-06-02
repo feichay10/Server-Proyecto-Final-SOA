@@ -9,6 +9,8 @@
 #include <QMessageBox>
 #include <QImage>
 #include <QTextStream>
+#include <QFileDialog>
+#include <QBuffer>
 #include <forward_list>
 
 QT_BEGIN_NAMESPACE
