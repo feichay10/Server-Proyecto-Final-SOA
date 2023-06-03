@@ -12,6 +12,8 @@
 #include <QFileDialog>
 #include <QBuffer>
 #include <forward_list>
+#include <QSpinBox>
+#include "selectport.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -26,17 +28,20 @@ class MainWindow : public QMainWindow {
   MainWindow(QWidget* parent = nullptr);
   ~MainWindow();
 
+ protected:
+  void closeEvent(QCloseEvent* event) override;
+
  private slots:
   void on_actionServer_On_triggered();
   void manageConnect();
   void clientInteraction();
-
   void on_actionOff_Server_triggered();
-
   void on_actionClose_Data_Base_triggered();
+  void on_actionSelect_the_port_to_server_triggered();
 
-  private:
+ private:
   Ui::MainWindow* ui;
+  SelectPort* select_port_;
   QTcpServer* server;
   std::forward_list<QTcpSocket*> connection_list;
 };

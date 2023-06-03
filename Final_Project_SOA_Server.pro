@@ -11,14 +11,17 @@ CONFIG += c++17
 SOURCES += \
     bbdd.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    selectport.cpp
 
 HEADERS += \
     bbdd.h \
-    mainwindow.h
+    mainwindow.h \
+    selectport.h
 
 FORMS += \
-    mainwindow.ui
+    mainwindow.ui \
+    selectport.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

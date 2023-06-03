@@ -924,6 +924,8 @@
     <property name="title">
      <string>Server options</string>
     </property>
+    <addaction name="actionSelect_the_port_to_server"/>
+    <addaction name="separator"/>
     <addaction name="actionExit_Server"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
@@ -1481,6 +1483,17 @@
    </property>
    <property name="toolTip">
     <string>Off Server</string>
+   </property>
+  </action>
+  <action name="actionSelect_the_port_to_server">
+   <property name="icon">
+    <iconset theme="system-run"/>
+   </property>
+   <property name="text">
+    <string>Select the port to server</string>
+   </property>
+   <property name="toolTip">
+    <string>You must select the port server will use to send/receive data</string>
    </property>
   </action>
  </widget>

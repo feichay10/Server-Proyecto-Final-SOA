@@ -9,22 +9,28 @@ MainWindow::MainWindow(QWidget* parent)
   ui->actionOff_Server->setEnabled(false); ///< We turn off the Off buttom
   ui->actionClose_Data_Base->setEnabled(false); ///< We turn off the close_data_base buttom
   server = NULL;
+  select_port_ = new SelectPort(this);
+  select_port_->setWindowTitle("Set port server");
 }
 
 MainWindow::~MainWindow() {
   delete ui;
 }
 
+void MainWindow::closeEvent(QCloseEvent* event) {
+  if (isEnabled()) event->accept();
+  else event->ignore();
+}
 
 void MainWindow::on_actionServer_On_triggered() {
   ///create socket, send some kind of response
   server = new QTcpServer();
 
-  if (server->listen(QHostAddress::Any, 8080)) {
+  if (server->listen(QHostAddress::Any, findChild<QSpinBox*>("spinBox_port")->value())) {
     connect(server, SIGNAL(newConnection()), this, SLOT(manageConnect()));
     ui->actionServer_On->setEnabled(false); ///< We turn off the On buttom
     ui->actionOff_Server->setEnabled(true); ///< We turn on the Off buttom
-    QMessageBox::information(this, "Server is activated", "Waiting connections...");
+    QMessageBox::information(this, "Server is activated", ("Waiting connections in port " + std::to_string(findChild<QSpinBox*>("spinBox_port")->value())).c_str());
 
   } else QMessageBox::critical(this, "Listening error", server->errorString());
 }
@@ -117,5 +123,13 @@ void MainWindow::on_actionOff_Server_triggered() {
 
 void MainWindow::on_actionClose_Data_Base_triggered() {
   ui->actionClose_Data_Base->setEnabled(false); ///< We turn on the close data base buttom
+}
+
+
+void MainWindow::on_actionSelect_the_port_to_server_triggered()
+{
+  select_port_->show();
+  this->setEnabled(false);
+  select_port_->setEnabled(true);
 }
 
