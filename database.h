@@ -7,16 +7,17 @@
 #include <QSqlError>
 #include <QDebug>
 #include <QString>
+#include <QDateTime>
 
 // Creation the table
 #define CREATE_TABLE_CHEDDAR++\
-    "(id INTEGER"\
-    ", projectName TEXT UNIQUE NOT NULL"\
-    ", taskNumber INTEGER NOT NULL"\
-    ", hyperperiod INTEGER"\
-    ", scheduleable TEXT CHECK (scheduleable IN (\'Yes\', \'No\'))"\
-    ", timestamp TEXT DEFAULT(date('now','localtime'))"\
-    ", image BLOB)"
+    "CREATE TABLE IF NOT EXISTS Cheddar++ ("\
+    "ip VARCHAR(14) PRIMARY KEY AUTOINCREMENT NOT NULL"\
+    "projectName TEXT UNIQUE NOT NULL"\
+    "taskNumber INTEGER NOT NULL"\
+    "scheduleable TEXT CHECK (scheduleable IN (\'Yes\', \'No\'))"\
+    "timestamp DATETIME)"\
+    "image BLOB)"
 
 class database : public QObject
 {
@@ -25,6 +26,7 @@ public:
     explicit database(QObject *parent = nullptr);
     bool startDataBase(QString &namefile);
     void createDataBase();
+    bool insertValues(QString projectName, int taskNumber, bool plannable, QString dateRealization, QByteArray &image);
 
 private:
     QSqlDatabase mDatabase;
