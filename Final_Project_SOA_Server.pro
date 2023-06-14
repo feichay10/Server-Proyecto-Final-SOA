@@ -20,6 +20,7 @@ HEADERS += \
     selectport.h
 
 FORMS += \
+    database.ui \
     mainwindow.ui \
     selectport.ui
 

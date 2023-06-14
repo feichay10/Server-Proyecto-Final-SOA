@@ -1,6 +1,7 @@
 #ifndef DATABASE_H
 #define DATABASE_H
 
+#include <QMainWindow>
 #include <QObject>
 #include <QSqlDatabase>
 #include <QSqlQuery>
@@ -11,7 +12,7 @@
 
 // Creation the table
 #define CREATE_TABLE_CHEDDAR++\
-    "CREATE TABLE IF NOT EXISTS Cheddar++ ("\
+"CREATE TABLE IF NOT EXISTS Cheddar++ ("\
     "ip VARCHAR(14) PRIMARY KEY AUTOINCREMENT NOT NULL"\
     "projectName TEXT UNIQUE NOT NULL"\
     "taskNumber INTEGER NOT NULL"\
@@ -19,16 +20,23 @@
     "timestamp DATETIME)"\
     "image BLOB)"
 
-class database : public QObject
+namespace Ui {
+class database;
+}
+
+class database : public QMainWindow
 {
     Q_OBJECT
+
 public:
     explicit database(QObject *parent = nullptr);
+    ~database();
     bool startDataBase(QString &namefile);
     void createDataBase();
     bool insertValues(QString projectName, int taskNumber, bool plannable, QString dateRealization, QByteArray &image);
 
 private:
+    Ui::database *ui;
     QSqlDatabase mDatabase;
 
 };
