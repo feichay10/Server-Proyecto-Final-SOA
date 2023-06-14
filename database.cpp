@@ -8,6 +8,8 @@ database::database(QWidget *parent) :
     ui->setupUi(this);
 }
 
+database::database() {}
+
 database::~database()
 {
     delete ui;
@@ -24,11 +26,21 @@ bool database::startDataBase(QString &nameFile) {
 
 void database::createDataBase() {
     QSqlQuery query;
-    bool creation = query.exec(CREATE_TABLE_CHEDDAR++);
+    QString create_table = "CREATE TABLE IF NOT EXISTS Cheddar++"\
+        "(ip VARCHAR(14) PRIMARY KEY AUTOINCREMENT NOT NULL"\
+        ", projectName TEXT UNIQUE NOT NULL"\
+        ", taskNumber INTEGER NOT NULL"\
+        ", scheduleable TEXT CHECK (scheduleable IN (\'Yes\', \'No\'))"\
+        ", timestamp DATETIME)"\
+        ", image BLOB)";
+
+    bool creation = query.exec(create_table);
 
     // Query creates data base if is not created
     if (!creation) {
         qDebug() << "Error creating table";
+    } else {
+        qDebug() << "The table has been created succesfully";
     }
 
     mDatabase.close();
@@ -39,7 +51,7 @@ bool database::insertValues(QString projectName, int taskNumber, bool plannable,
     QString isPlannable;
 
     if(plannable) {
-        isPlannable = "Sí";
+        isPlannable = "Yes";
     } else {
         isPlannable = "No";
     }
@@ -57,3 +69,7 @@ bool database::insertValues(QString projectName, int taskNumber, bool plannable,
         qDebug() << "Error adding values to database";
     }
 }
+
+
+
+

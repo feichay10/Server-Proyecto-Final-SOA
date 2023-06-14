@@ -11,14 +11,14 @@
 #include <QDateTime>
 
 // Creation the table
-#define CREATE_TABLE_CHEDDAR++\
-"CREATE TABLE IF NOT EXISTS Cheddar++ ("\
-    "ip VARCHAR(14) PRIMARY KEY AUTOINCREMENT NOT NULL"\
-    "projectName TEXT UNIQUE NOT NULL"\
-    "taskNumber INTEGER NOT NULL"\
-    "scheduleable TEXT CHECK (scheduleable IN (\'Yes\', \'No\'))"\
-    "timestamp DATETIME)"\
-    "image BLOB)"
+/*#define CREATE_TABLE_CHEDDAR++\
+    "CREATE TABLE IF NOT EXISTS Cheddar++"\
+    "(ip VARCHAR(14) PRIMARY KEY AUTOINCREMENT NOT NULL"\
+    ", projectName TEXT UNIQUE NOT NULL"\
+    ", taskNumber INTEGER NOT NULL"\
+    ", scheduleable TEXT CHECK (scheduleable IN (\'Yes\', \'No\'))"\
+    ", timestamp DATETIME)"\
+    ", image BLOB)"*/
 
 namespace Ui {
 class database;
@@ -29,7 +29,8 @@ class database : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit database(QObject *parent = nullptr);
+    explicit database(QWidget *parent = nullptr);
+    explicit database();
     ~database();
     bool startDataBase(QString &namefile);
     void createDataBase();

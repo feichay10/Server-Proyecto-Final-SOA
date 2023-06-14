@@ -11,6 +11,7 @@ MainWindow::MainWindow(QWidget* parent)
   server = NULL;
   select_port_ = new SelectPort(this);
   select_port_->setWindowTitle("Set port server");
+  new_data_base_ = new database(this);
 }
 
 MainWindow::~MainWindow() {
@@ -131,5 +132,13 @@ void MainWindow::on_actionSelect_the_port_to_server_triggered()
   select_port_->show();
   this->setEnabled(false);
   select_port_->setEnabled(true);
+}
+
+
+void MainWindow::on_actionNew_Data_Base_triggered()
+{
+  new_data_base_->show();
+  this->setEnabled(false);
+  new_data_base_->setEnabled(true);
 }
 
