@@ -138,7 +138,4 @@ void MainWindow::on_actionSelect_the_port_to_server_triggered()
 void MainWindow::on_actionNew_Data_Base_triggered()
 {
   new_data_base_->show();
-  this->setEnabled(false);
-  new_data_base_->setEnabled(true);
 }
-
