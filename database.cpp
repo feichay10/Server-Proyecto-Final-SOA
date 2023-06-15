@@ -9,7 +9,7 @@ database::database(QWidget *parent) :
     startDataBase();
     QSqlQuery query(mDatabase);
     //QString create_table = "CREATE TABLE IF NOT EXISTS CheddarPP (ip TEXT PRIMARY KEY, projectName TEXT UNIQUE NOT NULL, taskNumber INTEGER NOT NULL, schedulable TEXT CHECK (schedulable IN ('Yes', 'No')), timestamp DATETIME)";
-    QString create_table = "CREATE TABLE IF NOT EXISTS B (ip INTEGER, projectName TEXT, taskNumber INTEGER, schedulable TEXT, timestamp DATETIME, PRIMARY KEY (ip, projectName));";
+    QString create_table = "CREATE TABLE IF NOT EXISTS B (ip INTEGER, projectName TEXT, taskNumber INTEGER, schedulable TEXT, timestamp DATETIME, graph BLOB, PRIMARY KEY (ip, projectName));";
     query.prepare(create_table);
     bool creation = query.exec();
 
@@ -42,13 +42,13 @@ bool database::startDataBase() {
     return open;
 }
 
-void database::insertValues(QString projectName, int taskNumber, QString plannable, QString dateRealization) {
+void database::insertValues(QString projectName, int taskNumber, QString plannable, QString dateRealization, QByteArray image) {
     QSqlQuery query(mDatabase);
 
     /*query.prepare("INSERT INTO CheddarPP (ip, projectName, taskNumber, plannable, dateRealization) "
                   "VALUES (?,?,?,?,?);");*/
 
-    query.prepare("INSERT INTO B (ip, projectName, taskNumber, schedulable, timestamp) VALUES (?,?,?,?,?);");
+    query.prepare("INSERT INTO B (ip, projectName, taskNumber, schedulable, timestamp, graph) VALUES (?,?,?,?,?,?);");
 
     query.addBindValue(1);
     //query.bindValue(":ip", 1);
@@ -57,7 +57,7 @@ void database::insertValues(QString projectName, int taskNumber, QString plannab
     query.addBindValue(taskNumber);     ///< To received
     query.addBindValue(plannable.toStdString().c_str());    ///< To received
     query.addBindValue(QDateTime::fromString(dateRealization, "dd-mm-yyyy"));
-    //query.addBindValue(image);
+    query.addBindValue(image);
 
     if(!query.exec()) {
         qDebug() << query.lastError();
@@ -73,6 +73,6 @@ void database::on_pushButton_AddRow_clicked()
     QPixmap pix = ui->label_LoadImage->pixmap();
     pix.save(&buffer, "JPEG");
 
-    insertValues(ui->lineEdit_ProjectName->text(), ui->spinBox_TaskNum->value(), ui->label_IsScheduleable->text(), ui->dateEdit->text());
+    insertValues(ui->lineEdit_ProjectName->text(), ui->spinBox_TaskNum->value(), ui->label_IsScheduleable->text(), ui->dateEdit->text(), array);
     //insertValues();
 }
