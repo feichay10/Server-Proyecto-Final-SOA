@@ -36,7 +36,7 @@ public:
     ~database();
     bool startDataBase();
     void createTable();
-    void insertValues(QString projectName = "hola", int taskNumber = 5, bool plannable = true, QString dateRealization = "14/06/23");
+    void insertValues(QString projectName = "hola", int taskNumber = 5, QString plannable = "Y", QString dateRealization = "14/06/23");
 
 private slots:
     void on_pushButton_AddRow_clicked();
