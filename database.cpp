@@ -8,8 +8,7 @@ database::database(QWidget *parent) :
     ui->setupUi(this);
     startDataBase();
     QSqlQuery query(mDatabase);
-    //QString create_table = "CREATE TABLE IF NOT EXISTS CheddarPP (ip TEXT PRIMARY KEY, projectName TEXT UNIQUE NOT NULL, taskNumber INTEGER NOT NULL, schedulable TEXT CHECK (schedulable IN ('Yes', 'No')), timestamp DATETIME)";
-    QString create_table = "CREATE TABLE IF NOT EXISTS B (ip INTEGER, projectName TEXT, taskNumber INTEGER, schedulable TEXT, timestamp DATETIME, graph BLOB, PRIMARY KEY (ip, projectName));";
+    QString create_table = "CREATE TABLE IF NOT EXISTS B (ip INTEGER, projectName TEXT, taskNumber INTEGER, schedulable TEXT, timestamp TEXT, graph BLOB, PRIMARY KEY (ip, projectName));";
     query.prepare(create_table);
     bool creation = query.exec();
 
@@ -39,24 +38,41 @@ bool database::startDataBase() {
     if (!open) {
         qDebug() << "Problem with opening database";
     }
+
+    // Load data
+    QSqlQuery qry(mDatabase);
+    qry.prepare("SELECT * FROM B");
+    if (!qry.exec()) {
+        qDebug() << "Error loading previous data";
+    } else {
+        while(qry.next()) {
+            qDebug() << qry.value(0).toString();
+            qDebug() << qry.value(1).toString();
+            qDebug() << qry.value(2).toString();
+            qDebug() << qry.value(3).toString();
+            qDebug() << qry.value(4).toString();
+            qDebug() << qry.value(5).toString();
+            ui->tableWidget->insertRow(ui->tableWidget->rowCount());
+            for (int i = 0; i < 6; ++i)
+            {
+                ui->tableWidget->setItem(ui->tableWidget->rowCount()-1, i, new QTableWidgetItem(qry.value(i).toString()));
+            }
+        }
+    }
+
     return open;
 }
 
 void database::insertValues(QString projectName, int taskNumber, QString plannable, QString dateRealization, QByteArray image) {
     QSqlQuery query(mDatabase);
 
-    /*query.prepare("INSERT INTO CheddarPP (ip, projectName, taskNumber, plannable, dateRealization) "
-                  "VALUES (?,?,?,?,?);");*/
-
     query.prepare("INSERT INTO B (ip, projectName, taskNumber, schedulable, timestamp, graph) VALUES (?,?,?,?,?,?);");
 
     query.addBindValue(1);
-    //query.bindValue(":ip", 1);
-    //query.bindValue(":projectName", projectName);
     query.addBindValue(projectName.toStdString().c_str());
-    query.addBindValue(taskNumber);     ///< To received
+    query.addBindValue(taskNumber);                         ///< To received
     query.addBindValue(plannable.toStdString().c_str());    ///< To received
-    query.addBindValue(QDateTime::fromString(dateRealization, "dd-mm-yyyy"));
+    query.addBindValue(dateRealization);
     query.addBindValue(image);
 
     if(!query.exec()) {
@@ -73,6 +89,6 @@ void database::on_pushButton_AddRow_clicked()
     QPixmap pix = ui->label_LoadImage->pixmap();
     pix.save(&buffer, "JPEG");
 
-    insertValues(ui->lineEdit_ProjectName->text(), ui->spinBox_TaskNum->value(), ui->label_IsScheduleable->text(), ui->dateEdit->text(), array);
-    //insertValues();
+    insertValues(ui->lineEdit_ProjectName->text(), ui->spinBox_TaskNum->value(), ui->lineEdit_Schedulable->text(), ui->dateEdit->text(), array);
+    qDebug() << "Fecha " << ui->dateEdit->text();
 }
