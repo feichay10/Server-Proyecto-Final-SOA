@@ -46,12 +46,19 @@ bool database::startDataBase() {
         qDebug() << "Error loading previous data";
     } else {
         while(qry.next()) {
+            QImage oso;
+            QByteArray arr= qry.value(5).toByteArray();
+            oso.loadFromData(arr);
+            QPixmap image = QPixmap::fromImage(oso);
+            ui->label_LoadImage->setScaledContents(true);
+            //QPixmap image = ui->label_Image->pixmap();
+            ui->label_LoadImage->setPixmap(image.scaled(ui->label_LoadImage->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
             qDebug() << qry.value(0).toString();
             qDebug() << qry.value(1).toString();
             qDebug() << qry.value(2).toString();
             qDebug() << qry.value(3).toString();
             qDebug() << qry.value(4).toString();
-            qDebug() << qry.value(5).toString();
+            //qDebug() << qry.value(5).toString();
             ui->tableWidget->insertRow(ui->tableWidget->rowCount());
             for (int i = 0; i < 6; ++i)
             {

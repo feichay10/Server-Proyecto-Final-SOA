@@ -11,6 +11,7 @@
 #include <QDateTime>
 #include <QBuffer>
 #include <QStandardPaths>
+#include <QImage>
 
 // Creation the table
 /*#define CREATE_TABLE_CHEDDAR++\
