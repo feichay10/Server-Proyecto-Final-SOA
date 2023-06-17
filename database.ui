@@ -6,247 +6,250 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>886</width>
-    <height>718</height>
+    <width>1163</width>
+    <height>677</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QSplitter" name="splitter_2">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>20</y>
-      <width>729</width>
-      <height>268</height>
-     </rect>
-    </property>
-    <property name="orientation">
-     <enum>Qt::Horizontal</enum>
-    </property>
-    <widget class="QWidget" name="">
-     <layout class="QVBoxLayout" name="verticalLayout">
+   <layout class="QHBoxLayout" name="horizontalLayout_8">
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_7">
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_5">
+       <layout class="QVBoxLayout" name="verticalLayout_3">
         <item>
-         <widget class="QLabel" name="label_ProjectName">
-          <property name="text">
-           <string>Project name:</string>
-          </property>
-         </widget>
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_2">
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout">
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_5">
+                <item>
+                 <widget class="QLabel" name="label_ProjectName">
+                  <property name="text">
+                   <string>Project name:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLineEdit" name="lineEdit_ProjectName"/>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_4">
+                <item>
+                 <widget class="QLabel" name="label_TaskNum">
+                  <property name="text">
+                   <string>Task Number:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QSpinBox" name="spinBox_TaskNum"/>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_3">
+                <item>
+                 <widget class="QLabel" name="label_IsScheduleable">
+                  <property name="text">
+                   <string>Is schedulable? (Yes/No)</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLineEdit" name="lineEdit_Schedulable"/>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_2">
+                <item>
+                 <widget class="QLabel" name="label_Date">
+                  <property name="text">
+                   <string>Date:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QDateEdit" name="dateEdit"/>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <spacer name="verticalSpacer_4">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>20</width>
+                  <height>40</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_6">
+              <item>
+               <widget class="QPushButton" name="pushButton_Clear">
+                <property name="text">
+                 <string>Clear </string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_2">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QPushButton" name="pushButton_SaveDB">
+                <property name="text">
+                 <string>Load database</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_3">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QPushButton" name="pushButton_AddRow">
+                <property name="text">
+                 <string>Add row</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
         </item>
         <item>
-         <widget class="QLineEdit" name="lineEdit_ProjectName"/>
+         <widget class="QTableWidget" name="tableWidget">
+          <property name="minimumSize">
+           <size>
+            <width>540</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>540</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <column>
+           <property name="text">
+            <string>IP</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Project name</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Task number</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Schedulable?</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Date</string>
+           </property>
+          </column>
+         </widget>
         </item>
        </layout>
       </item>
       <item>
-       <spacer name="verticalSpacer">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>40</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_4">
+       <layout class="QVBoxLayout" name="verticalLayout_4">
         <item>
-         <widget class="QLabel" name="label_TaskNum">
+         <widget class="QLabel" name="label_Image">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="text">
-           <string>Task Number:</string>
+           <string>Simulation:</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QSpinBox" name="spinBox_TaskNum"/>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <spacer name="verticalSpacer_2">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>40</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_3">
-        <item>
-         <widget class="QLabel" name="label_IsScheduleable">
+         <widget class="QLabel" name="label_LoadImage">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="text">
-           <string>Is schedulable? (Yes/No)</string>
+           <string/>
+          </property>
+          <property name="pixmap">
+           <pixmap>../MEME1.png</pixmap>
           </property>
          </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="lineEdit_Schedulable"/>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <spacer name="verticalSpacer_4">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>40</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_2">
-        <item>
-         <widget class="QLabel" name="label_Date">
-          <property name="text">
-           <string>Date:</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QDateEdit" name="dateEdit"/>
         </item>
        </layout>
       </item>
      </layout>
-    </widget>
-    <widget class="QSplitter" name="splitter">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <widget class="QSplitter" name="splitter_3">
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
-      </property>
-      <widget class="QTableWidget" name="tableWidget">
-       <column>
-        <property name="text">
-         <string>IP</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Project name</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Task number</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Schedulable?</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Date</string>
-        </property>
-       </column>
-      </widget>
-      <widget class="QWidget" name="">
-       <layout class="QHBoxLayout" name="horizontalLayout_6">
-        <item>
-         <widget class="QPushButton" name="pushButton_Clear">
-          <property name="text">
-           <string>Clear </string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <spacer name="horizontalSpacer_2">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item>
-         <widget class="QPushButton" name="pushButton_SaveDB">
-          <property name="text">
-           <string>Load database</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <spacer name="horizontalSpacer_3">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item>
-         <widget class="QPushButton" name="pushButton_AddRow">
-          <property name="text">
-           <string>Add row</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-     </widget>
-    </widget>
-   </widget>
-   <widget class="QLabel" name="label_LoadImage">
-    <property name="geometry">
-     <rect>
-      <x>300</x>
-      <y>330</y>
-      <width>371</width>
-      <height>331</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_Image">
-    <property name="geometry">
-     <rect>
-      <x>180</x>
-      <y>490</y>
-      <width>46</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Image:</string>
-    </property>
-   </widget>
+    </item>
+   </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>886</width>
+     <width>1163</width>
      <height>22</height>
     </rect>
    </property>
