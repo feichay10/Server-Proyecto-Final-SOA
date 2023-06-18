@@ -20,6 +20,7 @@ MainWindow::~MainWindow() {
 
 void MainWindow::closeEvent(QCloseEvent* event) {
   if (isEnabled()) event->accept();
+
   else event->ignore();
 }
 
@@ -75,7 +76,7 @@ void MainWindow::clientInteraction() {
     bool delivery_success = image_from_client.loadFromData(message_from_client);
 
     if (delivery_success) {
-      ui->lineEdit_client_number->setText("Client " + QString::number(client_conn->socketDescriptor()) + " sent this image:");
+      ui->clients_msgsEdit->insertPlainText("\nClient " + QString::number(client_conn->socketDescriptor()) + " sent this image...");
       QPixmap pixmap_image_client = QPixmap::fromImage(image_from_client);
       ui->label_to_show_image->resize(pixmap_image_client.width(), pixmap_image_client.height());
       ui->label_to_show_image->setPixmap(pixmap_image_client);
@@ -95,6 +96,7 @@ void MainWindow::clientInteraction() {
       client_conn->write(byteArrayImage);
       client_conn->waitForBytesWritten();
     }
+
   } else {
     QMessageBox::critical(this, "ERROR: Command to server is not recognized", "The client " + QString::number(client_conn->socketDescriptor()) + " wants to do an unknown action");
     client_conn->write("ERROR1");
@@ -119,7 +121,7 @@ void MainWindow::on_actionOff_Server_triggered() {
 
   ui->actionServer_On->setEnabled(true); ///< We turn on the On buttom
   ui->actionOff_Server->setEnabled(false); ///< We turn  the Off buttom
-  QMessageBox::information(this, "Shutdown successful", "The server was turn off successful");
+  QMessageBox::information(this, "Shutdown successful", "The server was turned off successful");
 }
 
 void MainWindow::on_actionClose_Data_Base_triggered() {
@@ -127,15 +129,13 @@ void MainWindow::on_actionClose_Data_Base_triggered() {
 }
 
 
-void MainWindow::on_actionSelect_the_port_to_server_triggered()
-{
+void MainWindow::on_actionSelect_the_port_to_server_triggered() {
   select_port_->show();
   this->setEnabled(false);
   select_port_->setEnabled(true);
 }
 
 
-void MainWindow::on_actionNew_Data_Base_triggered()
-{
+void MainWindow::on_actionNew_Data_Base_triggered() {
   new_data_base_->show();
 }
