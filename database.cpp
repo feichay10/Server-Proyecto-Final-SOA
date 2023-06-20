@@ -104,16 +104,6 @@ void database::insertValues(QString ip, QString projectName, int taskNumber, QSt
   }
 }
 
-void database::on_pushButton_AddRow_clicked() {
-  //QByteArray array;
-  //QBuffer buffer(&array);
-  //buffer.open(QIODevice::WriteOnly);
-  //QPixmap pix = ui->label_LoadImage->pixmap();
-  //pix.save(&buffer, "JPEG");
-  //insertValues(ui->lineEdit_ProjectName->text(), ui->spinBox_TaskNum->value(), ui->lineEdit_Schedulable->text(), ui->dateEdit->text(), array);
-  //qDebug() << "Fecha " << ui->dateEdit->text();
-}
-
 void database::on_tableWidget_cellClicked(int row, int column) {
   QPixmap& pix = pixmaps_assoc_[row];
   ui->label_LoadImage->resize(pix.width(), pix.height());
@@ -123,6 +113,29 @@ void database::on_tableWidget_cellClicked(int row, int column) {
 
 void database::on_pushButton_LoadDB_clicked() {
   QString nameFile = QFileDialog::getOpenFileName(this, "Open DB", QDir::rootPath(), "");
+
+  if (nameFile != "") startDataBase(nameFile);
+}
+
+void database::keyPressEvent( QKeyEvent* event ) {
+  if(event->key() == Qt::Key_Delete) {
+    if (!ui->tableWidget->selectedItems().empty()) {
+      QString ip_to_remove = ui->tableWidget->item(ui->tableWidget->currentRow(), 0)->text();
+      QString name = ui->tableWidget->item(ui->tableWidget->currentRow(), 1)->text();
+      QString date = ui->tableWidget->item(ui->tableWidget->currentRow(), 4)->text();
+      QSqlQuery query(mDatabase);
+      query.prepare(QString("DELETE FROM CHEDDARPP WHERE ip='") + ip_to_remove + QString("' AND projectName='") + name + QString("' AND timestamp='") + date + QString("';"));
+
+      if (!query.exec()) qDebug() << query.lastError();
+
+      ui->tableWidget->removeRow(ui->tableWidget->currentRow());
+    }
+  }
+}
+
+
+void database::on_pushButton_NewDB_clicked() {
+  QString nameFile = QFileDialog::getSaveFileName(this, "Create DB", QDir::rootPath(), "");
 
   if (nameFile != "") startDataBase(nameFile);
 }
