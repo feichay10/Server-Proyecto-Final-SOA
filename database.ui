@@ -24,79 +24,6 @@
           <item>
            <layout class="QVBoxLayout" name="verticalLayout_2">
             <item>
-             <layout class="QVBoxLayout" name="verticalLayout">
-              <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_5">
-                <item>
-                 <widget class="QLabel" name="label_ProjectName">
-                  <property name="text">
-                   <string>Project name:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QLineEdit" name="lineEdit_ProjectName"/>
-                </item>
-               </layout>
-              </item>
-              <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_4">
-                <item>
-                 <widget class="QLabel" name="label_TaskNum">
-                  <property name="text">
-                   <string>Task Number:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QSpinBox" name="spinBox_TaskNum"/>
-                </item>
-               </layout>
-              </item>
-              <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_3">
-                <item>
-                 <widget class="QLabel" name="label_IsScheduleable">
-                  <property name="text">
-                   <string>Is schedulable? (Yes/No)</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QLineEdit" name="lineEdit_Schedulable"/>
-                </item>
-               </layout>
-              </item>
-              <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_2">
-                <item>
-                 <widget class="QLabel" name="label_Date">
-                  <property name="text">
-                   <string>Date:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QDateEdit" name="dateEdit"/>
-                </item>
-               </layout>
-              </item>
-              <item>
-               <spacer name="verticalSpacer_4">
-                <property name="orientation">
-                 <enum>Qt::Vertical</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>20</width>
-                  <height>40</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-             </layout>
-            </item>
-            <item>
              <layout class="QHBoxLayout" name="horizontalLayout_6">
               <item>
                <widget class="QPushButton" name="pushButton_Clear">
@@ -119,7 +46,7 @@
                </spacer>
               </item>
               <item>
-               <widget class="QPushButton" name="pushButton_SaveDB">
+               <widget class="QPushButton" name="pushButton_LoadDB">
                 <property name="text">
                  <string>Load database</string>
                 </property>
@@ -137,13 +64,6 @@
                  </size>
                 </property>
                </spacer>
-              </item>
-              <item>
-               <widget class="QPushButton" name="pushButton_AddRow">
-                <property name="text">
-                 <string>Add row</string>
-                </property>
-               </widget>
               </item>
              </layout>
             </item>
@@ -250,7 +170,7 @@
      <x>0</x>
      <y>0</y>
      <width>1163</width>
-     <height>22</height>
+     <height>23</height>
     </rect>
    </property>
   </widget>

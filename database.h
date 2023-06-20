@@ -11,6 +11,7 @@
 #include <QDateTime>
 #include <QBuffer>
 #include <QStandardPaths>
+#include <QFileDialog>
 #include <QImage>
 
 // Creation the table
@@ -34,12 +35,15 @@ class database : public QMainWindow {
   explicit database(QWidget* parent = nullptr);
   explicit database();
   ~database();
-  void insertValues(QString projectName, int taskNumber, QString plannable, QString dateRealization, QByteArray image);
+  void insertValues(QString ip, QString projectName, int taskNumber, QString plannable, QString dateRealization, QByteArray image);
+  void clearEverything();
 
  private slots:
   void on_pushButton_AddRow_clicked();
 
   void on_tableWidget_cellClicked(int row, int column);
+
+  void on_pushButton_LoadDB_clicked();
 
  private:
   Ui::database* ui;

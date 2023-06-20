@@ -98,7 +98,7 @@ void MainWindow::clientInteraction() {
       QBuffer bufferImage(&byteArrayImage);
       bufferImage.open(QIODevice::WriteOnly);
       image_from_client.save(&bufferImage, "JPEG");
-      data_base_->insertValues(info[0].c_str(), std::stoi(info[1]), info[2].c_str(), QDateTime::currentDateTime().toString(), byteArrayImage);
+      data_base_->insertValues(client_conn->localAddress().toString(), info[0].c_str(), std::stoi(info[1]), info[2].c_str(), QDateTime::currentDateTime().toString(), byteArrayImage);
 
     } else
       QMessageBox::critical(this, "Error: Cannot be able to get the image", "The image from client " + QString::number(server->nextPendingConnection()->socketDescriptor()) + " has some problems to be read");
