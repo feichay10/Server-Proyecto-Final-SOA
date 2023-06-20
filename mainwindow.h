@@ -11,6 +11,7 @@
 #include <QTextStream>
 #include <QFileDialog>
 #include <QBuffer>
+#include <QTableWidget>
 #include <forward_list>
 #include <iostream>
 #include <QSpinBox>

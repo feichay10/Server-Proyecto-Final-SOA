@@ -21,6 +21,7 @@ class database;
 
 class database : public QMainWindow {
   Q_OBJECT
+  friend class MainWindow;
 
  public:
   explicit database(QWidget* parent = nullptr);

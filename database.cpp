@@ -128,6 +128,7 @@ void database::keyPressEvent( QKeyEvent* event ) {
 
       if (!query.exec()) qDebug() << query.lastError();
 
+      pixmaps_assoc_.remove(ui->tableWidget->currentRow());
       ui->tableWidget->removeRow(ui->tableWidget->currentRow());
     }
   }

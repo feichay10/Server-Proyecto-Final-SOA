@@ -91,7 +91,6 @@
     </property>
     <addaction name="actionData_Base"/>
     <addaction name="separator"/>
-    <addaction name="actionLoad_Data_Base"/>
     <addaction name="separator"/>
     <addaction name="actionClose_Data_Base"/>
    </widget>
@@ -534,25 +533,9 @@
    <addaction name="separator"/>
    <addaction name="actionData_Base"/>
    <addaction name="separator"/>
-   <addaction name="actionLoad_Data_Base"/>
    <addaction name="separator"/>
    <addaction name="actionClose_Data_Base"/>
   </widget>
-  <action name="actionLoad_Data_Base">
-   <property name="icon">
-    <iconset theme="system-search">
-     <normaloff>.</normaloff>.</iconset>
-   </property>
-   <property name="text">
-    <string>Load Data Base</string>
-   </property>
-   <property name="toolTip">
-    <string>Load Data Base</string>
-   </property>
-   <property name="shortcut">
-    <string/>
-   </property>
-  </action>
   <action name="actionData_Base">
    <property name="icon">
     <iconset theme="list-add">

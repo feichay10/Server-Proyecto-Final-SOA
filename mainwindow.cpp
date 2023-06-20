@@ -101,28 +101,40 @@ void MainWindow::clientInteraction() {
       data_base_->insertValues(client_conn->localAddress().toString(), info[0].c_str(), std::stoi(info[1]), info[2].c_str(), QDateTime::currentDateTime().toString(), byteArrayImage);
 
     } else
-      QMessageBox::critical(this, "Error: Cannot be able to get the image", "The image from client " + QString::number(server->nextPendingConnection()->socketDescriptor()) + " has some problems to be read");
+      QMessageBox::critical(this, "Error: Cannot get the image", "The image from client " + QString::number(server->nextPendingConnection()->socketDescriptor()) + " could not be read");
 
   } else if (message_from_client.toStdString() == "RECEIVE_IMG") {
-    QString imagePath = QFileDialog::getOpenFileName(this, "Select image to send to client", QDir::homePath(), "Images (*.png *.jpg *.jpeg);;Any file(*.*)");
+    ///Send the list of images identified by name and date where that IP appears
+    client_conn->write("LISTA");
+    client_conn->flush();
+    client_conn->waitForBytesWritten();
+    ///Receive the number indicating the row wanted
+    client_conn->waitForReadyRead();
 
-    if (!imagePath.isEmpty()) {
-      QImage image_to_client(imagePath); ///< We store the image correctly from the file system
+    while (client_conn->bytesAvailable() > 0)
+      message_from_client = client_conn->readAll();
+
+    int client_wanted_row = std::stoi(message_from_client.toStdString());
+
+    ///Send the image of that row
+    if (client_wanted_row >= 0 && client_wanted_row < data_base_->pixmaps_assoc_.size()) {
+      QPixmap pix = data_base_->pixmaps_assoc_[client_wanted_row];
+      QImage image_to_server = pix.toImage();
       QByteArray byteArrayImage;
       QBuffer bufferImage(&byteArrayImage);
       bufferImage.open(QIODevice::WriteOnly);
-      image_to_client.save(&bufferImage, "JPEG"); ///< We store the image in the "bufferImage" as a "JPEG" to be sent to client
+      image_to_server.save(&bufferImage, "JPEG"); ///< We store the image in the "bufferImage" as a "JPEG" to be sent to server
       client_conn->write(byteArrayImage);
+      client_conn->flush();
       client_conn->waitForBytesWritten();
-    }
+
+    } else QMessageBox::critical(this, "ERROR: Client row problem", "The client " + QString::number(client_conn->socketDescriptor()) + " requested an invalid image");
 
   } else {
-    QMessageBox::critical(this, "ERROR: Command to server is not recognized", "The client " + QString::number(client_conn->socketDescriptor()) + " wants to do an unknown action");
+    QMessageBox::critical(this, "ERROR: Command to server not recognized", "The client " + QString::number(client_conn->socketDescriptor()) + " wants to do an unknown action");
     client_conn->write("ERROR1");
     client_conn->waitForBytesWritten();
   }
-
-  // client_conn->write("¿Pasó usted por casa?"); //temporarily
 }
 
 void MainWindow::on_actionOff_Server_triggered() {
