@@ -41,13 +41,13 @@ class MainWindow : public QMainWindow {
   void on_actionClose_Data_Base_triggered();
   void on_actionSelect_the_port_to_server_triggered();
 
-  void on_actionNew_Data_Base_triggered();
+  void on_actionData_Base_triggered();
 
  private:
   Ui::MainWindow* ui;
   SelectPort* select_port_;
   QTcpServer* server;
   std::forward_list<QTcpSocket*> connection_list;
-  database* new_data_base_;
+  database* data_base_;
 };
 #endif // MAINWINDOW_H

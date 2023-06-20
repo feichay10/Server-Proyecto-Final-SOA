@@ -27,24 +27,24 @@ namespace Ui {
 class database;
 }
 
-class database : public QMainWindow
-{
-    Q_OBJECT
+class database : public QMainWindow {
+  Q_OBJECT
 
-public:
-    explicit database(QWidget *parent = nullptr);
-    explicit database();
-    ~database();
-    bool startDataBase();
-    void createTable();
-    void insertValues(QString projectName, int taskNumber, QString plannable, QString dateRealization, QByteArray image);
+ public:
+  explicit database(QWidget* parent = nullptr);
+  explicit database();
+  ~database();
+  bool startDataBase();
+  void updateTable();
+  void createTable();
+  void insertValues(QString projectName, int taskNumber, QString plannable, QString dateRealization, QByteArray image);
 
-private slots:
-    void on_pushButton_AddRow_clicked();
+ private slots:
+  void on_pushButton_AddRow_clicked();
 
-private:
-    Ui::database *ui;
-    QSqlDatabase mDatabase;
+ private:
+  Ui::database* ui;
+  QSqlDatabase mDatabase;
 
 };
 

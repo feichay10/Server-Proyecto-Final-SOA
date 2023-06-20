@@ -11,7 +11,7 @@ MainWindow::MainWindow(QWidget* parent)
   server = NULL;
   select_port_ = new SelectPort(this);
   select_port_->setWindowTitle("Set port server");
-  new_data_base_ = new database(this);
+  data_base_ = new database(this);
 }
 
 MainWindow::~MainWindow() {
@@ -74,7 +74,12 @@ void MainWindow::clientInteraction() {
       message_from_client = client_conn->readAll();
 
     std::stringstream stream(message_from_client.toStdString());
-    std::cout << "info imagen: " << stream.str() << std::endl;
+    std::string arg;
+    std::vector<std::string> info;
+
+    while (std::getline(stream, arg, '|'))
+      info.push_back(arg);
+
     ///Read the image
     client_conn->waitForReadyRead();
 
@@ -89,6 +94,11 @@ void MainWindow::clientInteraction() {
       QPixmap pixmap_image_client = QPixmap::fromImage(image_from_client);
       ui->label_to_show_image->resize(pixmap_image_client.width(), pixmap_image_client.height());
       ui->label_to_show_image->setPixmap(pixmap_image_client);
+      QByteArray byteArrayImage;
+      QBuffer bufferImage(&byteArrayImage);
+      bufferImage.open(QIODevice::WriteOnly);
+      image_from_client.save(&bufferImage, "JPEG");
+      data_base_->insertValues(info[0].c_str(), std::stoi(info[1]), info[2].c_str(), QDateTime::currentDateTime().toString(), byteArrayImage);
 
     } else
       QMessageBox::critical(this, "Error: Cannot be able to get the image", "The image from client " + QString::number(server->nextPendingConnection()->socketDescriptor()) + " has some problems to be read");
@@ -145,6 +155,6 @@ void MainWindow::on_actionSelect_the_port_to_server_triggered() {
 }
 
 
-void MainWindow::on_actionNew_Data_Base_triggered() {
-  new_data_base_->show();
+void MainWindow::on_actionData_Base_triggered() {
+  data_base_->show();
 }
