@@ -34,17 +34,19 @@ class database : public QMainWindow {
   explicit database(QWidget* parent = nullptr);
   explicit database();
   ~database();
-  bool startDataBase();
-  void updateTable();
-  void createTable();
   void insertValues(QString projectName, int taskNumber, QString plannable, QString dateRealization, QByteArray image);
 
  private slots:
   void on_pushButton_AddRow_clicked();
 
+  void on_tableWidget_cellClicked(int row, int column);
+
  private:
   Ui::database* ui;
   QSqlDatabase mDatabase;
+  QVector<QPixmap> pixmaps_assoc_;
+  bool startDataBase(const QString& = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation) + "/pred_db_cheddarpp");
+  bool loadTable();
 
 };
 
