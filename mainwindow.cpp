@@ -105,7 +105,13 @@ void MainWindow::clientInteraction() {
 
   } else if (message_from_client.toStdString() == "RECEIVE_IMG") {
     ///Send the list of images identified by name and date where that IP appears
-    client_conn->write("LISTA");
+    std::string wishable_images = "";
+    QTableWidget* table = data_base_->findChild<QTableWidget*>("tableWidget");
+
+    for (int i = 0; i < table->rowCount(); ++i)
+      wishable_images += (std::to_string(i) + " - Name: " + table->item(i, 1)->text().toStdString() + " Date: " + table->item(i, 4)->text().toStdString() + "\n");
+
+    client_conn->write(wishable_images.c_str());
     client_conn->flush();
     client_conn->waitForBytesWritten();
     ///Receive the number indicating the row wanted
