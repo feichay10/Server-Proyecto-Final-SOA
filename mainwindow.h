@@ -12,6 +12,7 @@
 #include <QFileDialog>
 #include <QBuffer>
 #include <forward_list>
+#include <iostream>
 #include <QSpinBox>
 #include "selectport.h"
 #include "database.h"
@@ -42,7 +43,7 @@ class MainWindow : public QMainWindow {
 
   void on_actionNew_Data_Base_triggered();
 
-  private:
+ private:
   Ui::MainWindow* ui;
   SelectPort* select_port_;
   QTcpServer* server;

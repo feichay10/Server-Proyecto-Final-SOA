@@ -67,6 +67,15 @@ void MainWindow::clientInteraction() {
     client_conn->write("OK");
     client_conn->flush();
     client_conn->waitForBytesWritten();
+    ///Read the image info
+    client_conn->waitForReadyRead();
+
+    while (client_conn->bytesAvailable() > 0)
+      message_from_client = client_conn->readAll();
+
+    std::stringstream stream(message_from_client.toStdString());
+    std::cout << "info imagen: " << stream.str() << std::endl;
+    ///Read the image
     client_conn->waitForReadyRead();
 
     while (client_conn->bytesAvailable() > 0)
