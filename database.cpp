@@ -71,6 +71,15 @@ bool database::loadTable() {
       for (int i = 0; i < 6; ++i)
         ui->tableWidget->setItem(ui->tableWidget->rowCount() - 1, i, new QTableWidgetItem(qry.value(i).toString()));
     }
+
+    ///Always have the minimum date in the filter when updating table
+    std::list<QDateTime> dates_in_table;
+
+    for (int i = 0; i < ui->tableWidget->rowCount(); ++i) dates_in_table.push_front(QDateTime::fromString(ui->tableWidget->item(i, 4)->text()));
+
+    if (!dates_in_table.empty()) ui->dateTimeEdit->setDateTime(*(std::min_element(dates_in_table.begin(), dates_in_table.end())));
+
+    else ui->dateTimeEdit->setDateTime(QDateTime::currentDateTime());
   }
 
   return loaded;
@@ -101,6 +110,9 @@ void database::insertValues(QString ip, QString projectName, int taskNumber, QSt
     ui->tableWidget->setItem(ui->tableWidget->rowCount() - 1, 2, new QTableWidgetItem(QString(std::to_string(taskNumber).c_str())));
     ui->tableWidget->setItem(ui->tableWidget->rowCount() - 1, 3, new QTableWidgetItem(plannable));
     ui->tableWidget->setItem(ui->tableWidget->rowCount() - 1, 4, new QTableWidgetItem(dateRealization));
+
+    ///Always have the minimum date in the filter when updating table
+    if ((QDateTime::fromString(dateRealization) < ui->dateTimeEdit->dateTime())) ui->dateTimeEdit->setDateTime(QDateTime::fromString(dateRealization));
   }
 }
 
@@ -139,5 +151,27 @@ void database::on_pushButton_NewDB_clicked() {
   QString nameFile = QFileDialog::getSaveFileName(this, "Create DB", QDir::rootPath(), "");
 
   if (nameFile != "") startDataBase(nameFile);
+}
+
+
+void database::on_lineEdit_textChanged(const QString& new_text) {
+  if (!(std::regex_match(new_text.toStdString(), std::regex("^[A-Za-z0-9]*$")))) ui->lineEdit->undo();
+
+  else {
+    for (int i = 0; i < ui->tableWidget->rowCount(); ++i) {
+      if (new_text == "" || std::regex_search((ui->tableWidget->item(i, 1)->text().toStdString()), std::regex(new_text.toStdString()))) ui->tableWidget->showRow(i);
+
+      else ui->tableWidget->hideRow(i);
+    }
+  }
+}
+
+
+void database::on_dateTimeEdit_dateTimeChanged(const QDateTime& dateTime) {
+  for (int i = 0; i < ui->tableWidget->rowCount(); ++i) {
+    if ((QDateTime::fromString(ui->tableWidget->item(i, 4)->text())) >= dateTime) ui->tableWidget->showRow(i);
+
+    else ui->tableWidget->hideRow(i);
+  }
 }
 

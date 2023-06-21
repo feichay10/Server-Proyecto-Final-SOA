@@ -12,7 +12,9 @@
 #include <QKeyEvent>
 #include <QBuffer>
 #include <QStandardPaths>
+#include <forward_list>
 #include <QFileDialog>
+#include <regex>
 #include <QImage>
 
 namespace Ui {
@@ -39,6 +41,10 @@ class database : public QMainWindow {
   void on_pushButton_LoadDB_clicked();
 
   void on_pushButton_NewDB_clicked();
+
+  void on_lineEdit_textChanged(const QString& arg1);
+
+  void on_dateTimeEdit_dateTimeChanged(const QDateTime& dateTime);
 
  private:
   Ui::database* ui;
