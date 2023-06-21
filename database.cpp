@@ -162,28 +162,23 @@ void database::on_pushButton_NewDB_clicked() {
 void database::on_lineEdit_textChanged(const QString& new_text) {
   if (!(std::regex_match(new_text.toStdString(), std::regex("^[A-Za-z0-9]*$")))) ui->lineEdit->undo();
 
-  else {
-    for (int i = 0; i < ui->tableWidget->rowCount(); ++i) {
-      if (new_text == "" || std::regex_search((ui->tableWidget->item(i, 1)->text().toStdString()), std::regex(new_text.toStdString()))) ui->tableWidget->showRow(i);
-
-      else ui->tableWidget->hideRow(i);
-    }
-  }
+  else
+    applyFilters();
 }
 
 
 void database::on_dateTimeEdit_dateTimeChanged(const QDateTime& dateTime) {
-  for (int i = 0; i < ui->tableWidget->rowCount(); ++i) {
-    if ((QDateTime::fromString(ui->tableWidget->item(i, 4)->text())) >= dateTime) ui->tableWidget->showRow(i);
-
-    else ui->tableWidget->hideRow(i);
-  }
+  applyFilters();
 }
 
 
 void database::on_spinBox_filter_num_tasks_textChanged(const QString& new_text) {
+  applyFilters();
+}
+
+void database::applyFilters() {
   for (int i = 0; i < ui->tableWidget->rowCount(); ++i) {
-    if (ui->tableWidget->item(i, 2)->text().toInt() >= new_text.toInt()) ui->tableWidget->showRow(i);
+    if (((QDateTime::fromString(ui->tableWidget->item(i, 4)->text())) >= ui->dateTimeEdit->dateTime()) && (std::regex_search((ui->tableWidget->item(i, 1)->text().toStdString()), std::regex(ui->lineEdit->text().toStdString()))) && (ui->tableWidget->item(i, 2)->text().toInt() >= ui->spinBox_filter_num_tasks->value())) ui->tableWidget->showRow(i);
 
     else ui->tableWidget->hideRow(i);
   }

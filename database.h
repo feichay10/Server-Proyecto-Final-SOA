@@ -54,6 +54,7 @@ class database : public QMainWindow {
   QVector<QPixmap> pixmaps_assoc_;
   bool startDataBase(const QString& = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation) + "/pred_db_cheddarpp");
   bool loadTable();
+  void applyFilters();
 
 };
 
