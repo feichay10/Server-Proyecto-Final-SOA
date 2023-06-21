@@ -160,6 +160,9 @@
         </item>
         <item>
          <widget class="QSpinBox" name="spinBox_filter_num_tasks">
+          <property name="toolTip">
+           <string>Show rows with more than this number of tasks</string>
+          </property>
           <property name="maximum">
            <number>999999999</number>
           </property>
@@ -277,7 +280,7 @@
      <x>0</x>
      <y>0</y>
      <width>1300</width>
-     <height>22</height>
+     <height>23</height>
     </rect>
    </property>
   </widget>

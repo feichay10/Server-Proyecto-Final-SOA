@@ -46,6 +46,8 @@ class database : public QMainWindow {
 
   void on_dateTimeEdit_dateTimeChanged(const QDateTime& dateTime);
 
+  void on_spinBox_filter_num_tasks_textChanged(const QString& arg1);
+
  private:
   Ui::database* ui;
   QSqlDatabase mDatabase;

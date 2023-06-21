@@ -12,6 +12,8 @@
 #include <QFileDialog>
 #include <QBuffer>
 #include <QTableWidget>
+#include <QLineEdit>
+#include <QDateTimeEdit>
 #include <forward_list>
 #include <iostream>
 #include <QSpinBox>

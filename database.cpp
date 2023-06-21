@@ -180,3 +180,12 @@ void database::on_dateTimeEdit_dateTimeChanged(const QDateTime& dateTime) {
   }
 }
 
+
+void database::on_spinBox_filter_num_tasks_textChanged(const QString& new_text) {
+  for (int i = 0; i < ui->tableWidget->rowCount(); ++i) {
+    if (ui->tableWidget->item(i, 2)->text().toInt() >= new_text.toInt()) ui->tableWidget->showRow(i);
+
+    else ui->tableWidget->hideRow(i);
+  }
+}
+

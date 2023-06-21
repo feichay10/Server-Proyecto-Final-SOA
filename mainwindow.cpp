@@ -43,17 +43,8 @@ void MainWindow::manageConnect() {
     connect(new_socket, SIGNAL(readyRead()), this, SLOT(clientInteraction()));
     ui->clients_msgsEdit->insertPlainText("\nClient " + QString::number(new_socket->socketDescriptor()) + " connected...");
     QMessageBox::information(this, "New client", ("\nClient " + QString::number(new_socket->socketDescriptor()) + " connected..."));
-    // connection_list.front()->write("Hola cliente"); //temporarily
   }
 }
-
-// // Abrir archivo de foto
-//QString nameFile = QFileDialog::getOpenFileName(this, "Abrir imagen", QDir::rootPath(), "Imágenes (*.png *.jpg *.jpeg);;Cualquier archivo(*.*)");
-//ui->lineEdit_image->setText(nameFile);
-//QPixmap pixmap(ui->lineEdit_image->text());
-// // set a scaled pixmap
-//ui->imageLabel->resize(pixmap.width(), pixmap.height());
-//ui->imageLabel->setPixmap(pixmap.scaled(pixmap.width(),pixmap.height(),Qt::KeepAspectRatio));
 
 void MainWindow::clientInteraction() {
   QTcpSocket* client_conn = reinterpret_cast<QTcpSocket*>(sender());
@@ -103,37 +94,60 @@ void MainWindow::clientInteraction() {
       QMessageBox::critical(this, "Error: Cannot get the image", "The image from client " + QString::number(server->nextPendingConnection()->socketDescriptor()) + " could not be read");
 
   } else if (message_from_client.toStdString() == "RECEIVE_IMG") {
+    std::string filters = "ONAM|3|Wed Jun 21 10:04:13 2023";
+    /*client_conn->write("OK");
+    client_conn->flush();
+    client_conn->waitForBytesWritten();
+    ///Get the date, name and date desired
+    client_conn->waitForReadyRead();
+
+    while (client_conn->bytesAvailable() > 0)
+      message_from_client = client_conn->readAll();*/
+    std::stringstream stream(filters);
+    std::string arg;
+    std::vector<std::string> info;
+
+    while (std::getline(stream, arg, '|'))
+      info.push_back(arg);
+
+    ///Filter rows based on that
+    data_base_->findChild<QLineEdit*>("lineEdit")->setText(info[0].c_str());
+    data_base_->findChild<QSpinBox*>("spinBox_filter_num_tasks")->setValue(QString(info[1].c_str()).toInt());
+    data_base_->findChild<QDateTimeEdit*>("dateTimeEdit")->setDateTime(QDateTime::fromString(info[2].c_str()));
     ///Send the list of images identified by name and date where that IP appears
     std::string wishable_images = "";
     QTableWidget* table = data_base_->findChild<QTableWidget*>("tableWidget");
 
     for (int i = 0; i < table->rowCount(); ++i)
-      wishable_images += (std::to_string(i) + " - Name: " + table->item(i, 1)->text().toStdString() + " Date: " + table->item(i, 4)->text().toStdString() + "\n");
+      if (table->item(i, 0)->text() == client_conn->localAddress().toString() && !(table->isRowHidden(i))) wishable_images += (std::to_string(i) + " - Name: " + table->item(i, 1)->text().toStdString() + " Date: " + table->item(i, 4)->text().toStdString() + "\n");
 
-    client_conn->write(wishable_images.c_str());
+    client_conn->write((wishable_images == "" ? "X" : wishable_images.c_str())); ///<Database is empty?
     client_conn->flush();
     client_conn->waitForBytesWritten();
+
     ///Receive the number indicating the row wanted
-    client_conn->waitForReadyRead();
+    if (wishable_images != "") {
+      client_conn->waitForReadyRead();
 
-    while (client_conn->bytesAvailable() > 0)
-      message_from_client = client_conn->readAll();
+      while (client_conn->bytesAvailable() > 0)
+        message_from_client = client_conn->readAll();
 
-    int client_wanted_row = std::stoi(message_from_client.toStdString());
+      int client_wanted_row = std::stoi(message_from_client.toStdString());
 
-    ///Send the image of that row
-    if (client_wanted_row >= 0 && client_wanted_row < data_base_->pixmaps_assoc_.size()) {
-      QPixmap pix = data_base_->pixmaps_assoc_[client_wanted_row];
-      QImage image_to_server = pix.toImage();
-      QByteArray byteArrayImage;
-      QBuffer bufferImage(&byteArrayImage);
-      bufferImage.open(QIODevice::WriteOnly);
-      image_to_server.save(&bufferImage, "JPEG"); ///< We store the image in the "bufferImage" as a "JPEG" to be sent to server
-      client_conn->write(byteArrayImage);
-      client_conn->flush();
-      client_conn->waitForBytesWritten();
+      ///Send the image of that row
+      if (client_wanted_row >= 0 && client_wanted_row < data_base_->pixmaps_assoc_.size()) {
+        QPixmap pix = data_base_->pixmaps_assoc_[client_wanted_row];
+        QImage image_to_server = pix.toImage();
+        QByteArray byteArrayImage;
+        QBuffer bufferImage(&byteArrayImage);
+        bufferImage.open(QIODevice::WriteOnly);
+        image_to_server.save(&bufferImage, "JPEG"); ///< We store the image in the "bufferImage" as a "JPEG" to be sent to server
+        client_conn->write(byteArrayImage);
+        client_conn->flush();
+        client_conn->waitForBytesWritten();
 
-    } else QMessageBox::critical(this, "ERROR: Client row problem", "The client " + QString::number(client_conn->socketDescriptor()) + " requested an invalid image");
+      } else QMessageBox::critical(this, "ERROR: Client row problem", "The client " + QString::number(client_conn->socketDescriptor()) + " requested an invalid image");
+    }
 
   } else {
     QMessageBox::critical(this, "ERROR: Command to server not recognized", "The client " + QString::number(client_conn->socketDescriptor()) + " wants to do an unknown action");
