@@ -191,3 +191,8 @@ void MainWindow::on_actionSelect_the_port_to_server_triggered() {
 void MainWindow::on_actionData_Base_triggered() {
   data_base_->show();
 }
+
+void MainWindow::on_actionAbout_Cheddar_Server_triggered()
+{
+    QMessageBox::information(this, "About Cheddar++ Server", "This is a real-time scheduler simulator inspired by Cheddar. Is done using QT Creator framework (version 6.5.1) to make this program. This program acts as a server, all the clients will connect (via TCP) to introduce data to the database and this will send the clients images and some data of the scheduling planning.");
+}
