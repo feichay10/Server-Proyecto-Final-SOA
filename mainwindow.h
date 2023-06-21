@@ -44,7 +44,9 @@ class MainWindow : public QMainWindow {
   void on_actionSelect_the_port_to_server_triggered();
   void on_actionData_Base_triggered();
 
- private:
+  void on_actionAbout_Cheddar_Server_triggered();
+
+  private:
   Ui::MainWindow* ui;
   SelectPort* select_port_;
   QTcpServer* server;
