@@ -41,8 +41,7 @@ void MainWindow::manageConnect() {
     QTcpSocket* new_socket = server->nextPendingConnection();
     connection_list.push_front(new_socket);
     connect(new_socket, SIGNAL(readyRead()), this, SLOT(clientInteraction()));
-    ui->clients_msgsEdit->insertPlainText("\nClient " + QString::number(new_socket->socketDescriptor()) + " connected...");
-    QMessageBox::information(this, "New client", ("\nClient " + QString::number(new_socket->socketDescriptor()) + " connected..."));
+    ui->clients_msgsEdit->insertPlainText("Client " + QString::number(new_socket->socketDescriptor()) + " connected...\n");
   }
 }
 
@@ -58,6 +57,7 @@ void MainWindow::clientInteraction() {
     client_conn->flush();
     client_conn->waitForBytesWritten();
     ///Read the image info
+    message_from_client.clear();
     client_conn->waitForReadyRead();
 
     while (client_conn->bytesAvailable() > 0)
@@ -71,6 +71,7 @@ void MainWindow::clientInteraction() {
       info.push_back(arg);
 
     ///Read the image
+    message_from_client.clear();
     client_conn->waitForReadyRead();
 
     while (client_conn->bytesAvailable() > 0)
@@ -80,7 +81,7 @@ void MainWindow::clientInteraction() {
     bool delivery_success = image_from_client.loadFromData(message_from_client);
 
     if (delivery_success) {
-      ui->clients_msgsEdit->insertPlainText("\nClient " + QString::number(client_conn->socketDescriptor()) + " sent this image...");
+      ui->clients_msgsEdit->insertPlainText("Client " + QString::number(client_conn->socketDescriptor()) + " sent this image...\n");
       QPixmap pixmap_image_client = QPixmap::fromImage(image_from_client);
       ui->label_to_show_image->resize(pixmap_image_client.width(), pixmap_image_client.height());
       ui->label_to_show_image->setPixmap(pixmap_image_client);
@@ -91,13 +92,14 @@ void MainWindow::clientInteraction() {
       data_base_->insertValues(client_conn->localAddress().toString(), info[0].c_str(), std::stoi(info[1]), info[2].c_str(), QDateTime::currentDateTime().toString(), byteArrayImage);
 
     } else
-      QMessageBox::critical(this, "Error: Cannot get the image", "The image from client " + QString::number(server->nextPendingConnection()->socketDescriptor()) + " could not be read");
+      ui->clients_msgsEdit->insertPlainText("The image from client " + QString::number(server->nextPendingConnection()->socketDescriptor()) + " could not be read\n");
 
   } else if (message_from_client.toStdString() == "RECEIVE_IMG") {
     client_conn->write("OK");
     client_conn->flush();
     client_conn->waitForBytesWritten();
     ///Get the date, name and date desired
+    message_from_client.clear();
     client_conn->waitForReadyRead();
 
     while (client_conn->bytesAvailable() > 0)
@@ -111,54 +113,58 @@ void MainWindow::clientInteraction() {
       info.push_back(arg);
 
     ///Filter rows based on that
-    data_base_->findChild<QLineEdit*>("lineEdit")->setText(info[0].c_str());
-    data_base_->findChild<QSpinBox*>("spinBox_filter_num_tasks")->setValue(QString(info[1].c_str()).toInt());
-    data_base_->findChild<QDateTimeEdit*>("dateTimeEdit")->setDateTime(QDateTime::fromString(info[2].c_str()));
-    ///Send the list of images identified by name and date where that IP appears
-    std::string wishable_images = "";
-    QTableWidget* table = data_base_->findChild<QTableWidget*>("tableWidget");
+    if (info.size() == 3) {
+      data_base_->findChild<QLineEdit*>("lineEdit")->setText(info[0].c_str());
+      data_base_->findChild<QSpinBox*>("spinBox_filter_num_tasks")->setValue(QString(info[1].c_str()).toInt());
+      data_base_->findChild<QDateTimeEdit*>("dateTimeEdit")->setDateTime(QDateTime::fromString(info[2].c_str()));
+      ///Send the list of images identified by name and date where that IP appears
+      std::string wishable_images = "";
+      QTableWidget* table = data_base_->findChild<QTableWidget*>("tableWidget");
 
-    for (int i = 0; i < table->rowCount(); ++i)
-      if (table->item(i, 0)->text() == client_conn->localAddress().toString() && !(table->isRowHidden(i))) wishable_images += (std::to_string(i) + " - Name: " + table->item(i, 1)->text().toStdString() + " Date: " + table->item(i, 4)->text().toStdString() + "\n");
+      for (int i = 0; i < table->rowCount(); ++i)
+        if (table->item(i, 0)->text() == client_conn->localAddress().toString() && !(table->isRowHidden(i))) wishable_images += (std::to_string(i) + " - Name: " + table->item(i, 1)->text().toStdString() + " Date: " + table->item(i, 4)->text().toStdString() + "\n");
 
-    client_conn->write((wishable_images == "" ? "X" : wishable_images.c_str())); ///<Database is empty?
-    client_conn->flush();
-    client_conn->waitForBytesWritten();
+      client_conn->write((wishable_images == "" ? "X" : wishable_images.c_str())); ///<Database is empty?
+      client_conn->flush();
+      client_conn->waitForBytesWritten();
 
-    ///Receive the number indicating the row wanted
-    if (wishable_images != "") {
-      client_conn->waitForReadyRead();
+      ///Receive the number indicating the row wanted
+      if (wishable_images != "") {
+        message_from_client.clear();
+        client_conn->waitForReadyRead();
 
-      while (client_conn->bytesAvailable() > 0)
-        message_from_client = client_conn->readAll();
+        while (client_conn->bytesAvailable() > 0)
+          message_from_client = client_conn->readAll();
 
-      int client_wanted_row = std::stoi(message_from_client.toStdString());
+        if (message_from_client.toStdString() != "") {
+          int client_wanted_row = std::stoi(message_from_client.toStdString());
 
-      ///Send the image of that row
-      if (client_wanted_row >= 0 && client_wanted_row < data_base_->pixmaps_assoc_.size() && table->item(client_wanted_row, 0)->text() == client_conn->localAddress().toString()) {
-        QPixmap pix = data_base_->pixmaps_assoc_[client_wanted_row];
-        QImage image_to_server = pix.toImage();
-        QByteArray byteArrayImage;
-        QBuffer bufferImage(&byteArrayImage);
-        bufferImage.open(QIODevice::WriteOnly);
-        image_to_server.save(&bufferImage, "JPEG"); ///< We store the image in the "bufferImage" as a "JPEG" to be sent to server
-        client_conn->write(byteArrayImage);
-        client_conn->flush();
-        client_conn->waitForBytesWritten();
+          ///Send the image of that row
+          if (client_wanted_row >= 0 && client_wanted_row < data_base_->pixmaps_assoc_.size() && table->item(client_wanted_row, 0)->text() == client_conn->localAddress().toString()) {
+            QPixmap pix = data_base_->pixmaps_assoc_[client_wanted_row];
+            QImage image_to_server = pix.toImage();
+            QByteArray byteArrayImage;
+            QBuffer bufferImage(&byteArrayImage);
+            bufferImage.open(QIODevice::WriteOnly);
+            image_to_server.save(&bufferImage, "JPEG"); ///< We store the image in the "bufferImage" as a "JPEG" to be sent to server
+            client_conn->write(byteArrayImage);
+            client_conn->flush();
+            client_conn->waitForBytesWritten();
+          }
 
-      } else QMessageBox::critical(this, "ERROR: Client row problem", "The client " + QString::number(client_conn->socketDescriptor()) + " requested an invalid image");
-    }
+        } else ui->clients_msgsEdit->insertPlainText("The client " + QString::number(client_conn->socketDescriptor()) + " didn't ask for a row...\n");
 
-  } else {
-    QMessageBox::critical(this, "ERROR: Command to server not recognized", "The client " + QString::number(client_conn->socketDescriptor()) + " wants to do an unknown action");
-    client_conn->write("ERROR1");
-    client_conn->waitForBytesWritten();
-  }
+      } else ui->clients_msgsEdit->insertPlainText("The client " + QString::number(client_conn->socketDescriptor()) + " requested an invalid image\n");
+
+    } else ui->clients_msgsEdit->insertPlainText("Client " + QString::number(client_conn->socketDescriptor()) + " didn't send the filters...\n");
+
+  } else
+    ui->clients_msgsEdit->insertPlainText("The client " + QString::number(client_conn->socketDescriptor()) + " wants to do an unknown action\n");
 }
 
 void MainWindow::on_actionOff_Server_triggered() {
   for(auto i : connection_list) {
-    i->disconnect(); ///< We disconnect each socket before delete it
+    i->disconnect(); ///< We disconnect each socket before deleting it
     delete i; ///< We delete each socket of server
   }
 
