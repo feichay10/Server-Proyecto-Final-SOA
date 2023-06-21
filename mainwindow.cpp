@@ -135,7 +135,7 @@ void MainWindow::clientInteraction() {
       int client_wanted_row = std::stoi(message_from_client.toStdString());
 
       ///Send the image of that row
-      if (client_wanted_row >= 0 && client_wanted_row < data_base_->pixmaps_assoc_.size()) {
+      if (client_wanted_row >= 0 && client_wanted_row < data_base_->pixmaps_assoc_.size() && table->item(client_wanted_row, 0)->text() == client_conn->localAddress().toString()) {
         QPixmap pix = data_base_->pixmaps_assoc_[client_wanted_row];
         QImage image_to_server = pix.toImage();
         QByteArray byteArrayImage;
