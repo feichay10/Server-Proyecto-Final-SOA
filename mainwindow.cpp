@@ -94,16 +94,16 @@ void MainWindow::clientInteraction() {
       QMessageBox::critical(this, "Error: Cannot get the image", "The image from client " + QString::number(server->nextPendingConnection()->socketDescriptor()) + " could not be read");
 
   } else if (message_from_client.toStdString() == "RECEIVE_IMG") {
-    std::string filters = "ONAM|3|Wed Jun 21 10:04:13 2023";
-    /*client_conn->write("OK");
+    client_conn->write("OK");
     client_conn->flush();
     client_conn->waitForBytesWritten();
     ///Get the date, name and date desired
     client_conn->waitForReadyRead();
 
     while (client_conn->bytesAvailable() > 0)
-      message_from_client = client_conn->readAll();*/
-    std::stringstream stream(filters);
+      message_from_client = client_conn->readAll();
+
+    std::stringstream stream(message_from_client.toStdString());
     std::string arg;
     std::vector<std::string> info;
 
