@@ -39,9 +39,7 @@ class MainWindow : public QMainWindow {
   void manageConnect();
   void clientInteraction();
   void on_actionOff_Server_triggered();
-  void on_actionClose_Data_Base_triggered();
   void on_actionSelect_the_port_to_server_triggered();
-
   void on_actionData_Base_triggered();
 
  private:

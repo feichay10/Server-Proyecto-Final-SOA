@@ -7,6 +7,11 @@ database::database(QWidget* parent) :
   ui->setupUi(this);
   mDatabase = QSqlDatabase::addDatabase("QSQLITE");
   startDataBase();
+  ui->tableWidget->resizeRowsToContents();
+  ui->tableWidget->resizeColumnsToContents();
+  QHeaderView* header = ui->tableWidget->horizontalHeader();
+  header->setSectionResizeMode(QHeaderView::Stretch);
+  header->setStretchLastSection(true);
 }
 
 database::database() {}

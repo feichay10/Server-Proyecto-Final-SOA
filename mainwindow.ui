@@ -39,6 +39,9 @@
         <height>0</height>
        </size>
       </property>
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
       <property name="placeholderText">
        <string>Messages of clients</string>
       </property>
@@ -47,7 +50,7 @@
     <item>
      <widget class="QLabel" name="label_to_show_image">
       <property name="text">
-       <string>IMAGE CLIENT</string>
+       <string> </string>
       </property>
      </widget>
     </item>
@@ -59,7 +62,7 @@
      <x>0</x>
      <y>0</y>
      <width>1167</width>
-     <height>23</height>
+     <height>22</height>
     </rect>
    </property>
    <property name="palette">
@@ -92,7 +95,6 @@
     <addaction name="actionData_Base"/>
     <addaction name="separator"/>
     <addaction name="separator"/>
-    <addaction name="actionClose_Data_Base"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuSimulation"/>
@@ -533,19 +535,17 @@
    <addaction name="separator"/>
    <addaction name="actionData_Base"/>
    <addaction name="separator"/>
-   <addaction name="separator"/>
-   <addaction name="actionClose_Data_Base"/>
   </widget>
   <action name="actionData_Base">
    <property name="icon">
-    <iconset theme="list-add">
+    <iconset theme="applications-science">
      <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
-    <string>New Data Base</string>
+    <string>Create/Load database</string>
    </property>
    <property name="toolTip">
-    <string>New Data Base</string>
+    <string>Create/Load database</string>
    </property>
   </action>
   <action name="actionExit_Server">
@@ -576,21 +576,6 @@
    </property>
    <property name="text">
     <string>Manual</string>
-   </property>
-  </action>
-  <action name="actionClose_Data_Base">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-   <property name="icon">
-    <iconset theme="application-exit">
-     <normaloff>.</normaloff>.</iconset>
-   </property>
-   <property name="text">
-    <string>Close Data Base</string>
-   </property>
-   <property name="toolTip">
-    <string>Close Data Base</string>
    </property>
   </action>
   <action name="actionServer_On">

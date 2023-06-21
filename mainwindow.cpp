@@ -7,7 +7,6 @@ MainWindow::MainWindow(QWidget* parent)
   ui->setupUi(this);
   ui->actionServer_On->setEnabled(true); ///< We turn on the On buttom
   ui->actionOff_Server->setEnabled(false); ///< We turn off the Off buttom
-  ui->actionClose_Data_Base->setEnabled(false); ///< We turn off the close_data_base buttom
   server = NULL;
   select_port_ = new SelectPort(this);
   select_port_->setWindowTitle("Set port server");
@@ -159,10 +158,6 @@ void MainWindow::on_actionOff_Server_triggered() {
   ui->actionServer_On->setEnabled(true); ///< We turn on the On buttom
   ui->actionOff_Server->setEnabled(false); ///< We turn  the Off buttom
   QMessageBox::information(this, "Shutdown successful", "The server was turned off successful");
-}
-
-void MainWindow::on_actionClose_Data_Base_triggered() {
-  ui->actionClose_Data_Base->setEnabled(false); ///< We turn on the close data base buttom
 }
 
 
